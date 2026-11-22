@@ -21,6 +21,7 @@
   --body:'Be Vietnam Pro','Segoe UI',sans-serif;
   --quote:'Lora',Georgia,serif;
   --map:url(assets/ban-do.jpg);
+  --night:url(assets/dem.jpg);
 }
 :root[data-mode="dark"]{
   --bg:#1D1524; --bg-soft:#261B2E; --panel:#2E2137;
@@ -285,6 +286,10 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .gl-k{font-size:12.5px;letter-spacing:3px;text-transform:uppercase;color:var(--cave-accent)}
 .gl-txt b{text-wrap:balance;font-family:var(--display);font-weight:500;font-size:clamp(22px,2.6vw,27px);line-height:1.4}
 .gl-go{align-self:flex-start;margin-top:.6rem;padding:.55rem 1.3rem;border-radius:999px;background:var(--cave-accent);color:#2E1D27;font-weight:500;font-size:15.5px}
+.gift-links{display:grid;gap:18px;margin-top:2rem;max-width:900px}
+.gift-links .gift-link{margin-top:0}
+@media(min-width:900px){.gift-links{grid-template-columns:1fr 1fr}.gift-links .gift-link{grid-template-columns:1fr}.gift-links .gl-pic{min-height:190px}}
+.gl-night{background-image:var(--night);background-size:cover;background-position:50% 30%}
 </style>
 </head>
 <body>
@@ -401,14 +406,20 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 
     <section class="sec" id="qua-bia-rung">
       <p class="eyebrow">Quà bên bìa rừng</p>
-      <h2>Trước khi quyết định, bạn có thể đặt dấu chấm đầu tiên</h2>
+      <h2>Trước khi quyết định, bạn có thể nhận một món quà nhỏ</h2>
       <div class="prose">
-        <p>Nếu bạn muốn nếm thử một chút không khí của những buổi tối bên bếp lửa, tôi để sẵn nơi bìa rừng một món quà nhỏ. Bạn ra đứng ở khoảng trống trước hàng cây, nhìn lại vòng đi của mình, rồi từ xa hỏi chuyện Linh thần tối đang lơ lửng trước cửa hang gần nhất, bằng trí tưởng tượng và ngòi bút của bạn. Món quà cần chừng mười lăm phút yên tĩnh, và trao lại cho bạn một tấm thiếp ghi dấu chấm đầu tiên trên tấm bản đồ của chính mình.</p>
+        <p>Nếu bạn muốn nếm thử một chút không khí của những ngày bên bếp lửa, tôi để sẵn nơi bìa rừng hai món quà. Món quà ban ngày mời bạn ra đứng ở khoảng trống trước hàng cây, nhìn lại vòng đi của mình, rồi từ xa hỏi chuyện Linh thần tối đang lơ lửng trước cửa hang gần nhất. Món quà ban đêm mời bạn gửi một câu hỏi vào giấc ngủ, để sáng hôm sau giấc mơ mang lời đáp trở về. Mỗi món quà cần chừng mười lăm phút yên tĩnh, và trao lại cho bạn một tấm thiếp của riêng mình.</p>
       </div>
-      <a class="gift-link" href="dau-cham-dau-tien/">
-        <span class="gl-pic" aria-hidden="true"></span>
-        <span class="gl-txt"><span class="gl-k">Món quà</span><b>Dấu chấm đầu tiên: Bạn đang ở đây</b><span class="gl-go">Mở món quà</span></span>
-      </a>
+      <div class="gift-links">
+        <a class="gift-link" href="dau-cham-dau-tien/">
+          <span class="gl-pic" aria-hidden="true"></span>
+          <span class="gl-txt"><span class="gl-k">Món quà ban ngày</span><b>Dấu chấm đầu tiên: Bạn đang ở đây</b><span class="gl-go">Mở món quà</span></span>
+        </a>
+        <a class="gift-link" href="hoi-va-toan-thuc-tra-loi/">
+          <span class="gl-pic gl-night" aria-hidden="true"></span>
+          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-go">Mở món quà</span></span>
+        </a>
+      </div>
     </section>
 
     <section class="sec" id="bon-ngay">
