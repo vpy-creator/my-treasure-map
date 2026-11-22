@@ -337,6 +337,13 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .ritual{list-style:none;display:grid;gap:12px;margin:1rem 0 .4rem}
 .ritual li{position:relative;padding-left:28px;color:var(--cave-ink);font-size:16.5px;line-height:1.75}
 .ritual li::before{content:"";position:absolute;left:3px;top:.62em;width:9px;height:9px;transform:rotate(45deg);background:var(--cave-accent)}
+
+.season{margin-top:1.6rem;padding:1.1rem 1.3rem 1.2rem;border-left:3px solid var(--accent);background:var(--accent-pale);border-radius:0 16px 16px 0}
+.season p{font-size:16px;margin:.45rem 0 0;color:var(--ink)}
+.season .season-k{margin:0;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep)}
+.season .ph-closed{display:none}
+.season-closed .season .ph-open{display:none}
+.season-closed .season .ph-closed{display:block}
 </style>
 </head>
 <body>
@@ -369,8 +376,15 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
         <p>Khi ta ngủ, phần tâm trí lo toan ban ngày đặt bút xuống, và một phần rộng lớn hơn của ta lên tiếng. Tôi gọi phần ấy là Toàn thức: phần tâm trí rộng lớn bao trùm tất thảy, nơi những tạo tác mới được hình thành. Khái niệm này khởi nguồn từ Olivier Lockert, trong bộ sách <em>Những người tạo ra hiện thực</em> mà tôi đã dịch sang tiếng Việt.</p>
         <p>Người xưa ở nhiều nền văn hoá đều biết một cách trò chuyện với phần rộng lớn ấy: trước khi ngủ, họ gửi vào đêm một câu hỏi thật lòng, rồi sáng ra ghi lại điều giấc mơ mang về. Món quà này dẫn bạn đi trọn một vòng như thế. Tối nay, bạn viết lá thư gửi Trí tuệ của đêm. Sáng mai, bạn quay lại trang này để ghi giấc mơ, tự đọc nó qua vài câu hỏi dẫn, và nếu muốn, gửi cho tôi để chúng ta cùng đọc trong một cuộc trò chuyện ngắn.</p>
       </div>
+      <div class="season" id="season">
+        <p class="season-k">Món quà của một mùa ngắn</p>
+        <p>Cuối tháng Mười Một này, tôi ở giữa một vùng núi rừng rộng mở. Nơi đó tâm trí được lắng xuống, và tôi nghe Toàn thức rõ hơn, cho chính mình và cho cả những người đang cùng mơ. Vì vậy, tôi mở món quà này trong một quãng thời gian ngắn, để đón giấc mơ của bạn từ chính nơi lắng nghe ấy.</p>
+        <p class="ph-open">Tôi nhận giấc mơ vào những buổi sáng từ 23 đến 25/11/2026, rồi trang này khép lại.</p>
+        <p class="ph-open">Đêm 24/11 là đêm cuối để bạn gửi lá thư, để giấc mơ kịp mang lời đáp về trong buổi sáng cuối cùng.</p>
+        <p class="ph-closed">Những buổi sáng nghe giấc mơ ấy đã trọn vẹn, và món quà đã khép lại.</p>
+      </div>
       <div class="btn-row">
-        <a class="btn btn-primary" href="#mon-qua">Viết lá thư gửi đêm</a>
+        <a class="btn btn-primary" id="heroCta" href="#mon-qua">Viết lá thư gửi đêm</a>
       </div>
     </div>
     <div class="arch-box">
@@ -598,6 +612,17 @@ var Sound=(function(){
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   var LAST=7, WAIT=4;
+  /* Mùa nhận giấc mơ, giờ Việt Nam: thư gửi đêm tới rạng sáng 25/11, giấc mơ tới hết ngày 25/11/2026 */
+  var LETTER_END=Date.parse('2026-11-25T05:00:00+07:00'), DREAM_END=Date.parse('2026-11-26T00:00:00+07:00');
+  function phase(){ var t=Date.now(); return t<LETTER_END?'open':(t<DREAM_END?'dream':'closed'); }
+  var VIEW_DREAM_ONLY=function(){ return '<h3>Buổi sáng cuối cùng</h3>'+
+      '<p class="scene">Những đêm gửi thư đã khép lại. Nếu câu hỏi của bạn đã lên đường từ đêm qua, giấc mơ sáng nay vẫn kịp tìm tới tôi cho tới hết ngày 25/11/2026.</p>'+
+      '<div class="cave-nav"><button class="cbtn go" type="button" id="toDream">Ghi giấc mơ sáng nay</button></div>'; };
+  var VIEW_CLOSED=function(){ return '<h3>Món quà của đêm đã khép lại</h3>'+
+      '<div class="vig v-night-sky" aria-hidden="true"></div>'+
+      '<p class="scene">Những buổi sáng nghe giấc mơ giữa núi rừng đã trọn vẹn. Cảm ơn bạn, cùng tất cả những người đã gửi câu hỏi vào đêm và tin tôi cùng đọc giấc mơ của mình.</p>'+
+      '<p class="scene">Toàn thức vẫn lắng nghe mỗi đêm. Bạn vẫn có thể tự gửi một câu hỏi trước khi ngủ, rồi sáng ra ghi lại điều giấc mơ mang về, theo nghi thức nhỏ bạn đã biết ở trang này.</p>'+
+      '<div class="cave-nav"><a class="cbtn go" href="'+CFG.COURSE_URL+'">Xem hành trình My Treasure Map</a></div>'; };
   var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function knots(){
@@ -698,8 +723,9 @@ var Sound=(function(){
         '<div><dt>Hình ảnh còn đọng lại</dt><dd class="q">'+esc(S.image)+'</dd></div>'+
         '<div><dt>Điều tôi nghe thấy</dt><dd>'+esc(S.reading)+'</dd></div>'+
         '</dl><p class="cf">My Treasure Map, cùng Vũ Phi Yên</p></article>'+
-        '<div class="sendbox"><h4>Cùng Yên đọc giấc mơ này</h4>'+
+        (phase()==='closed' ? '<div class="sendbox"><h4>Những buổi sáng nghe giấc mơ đã khép lại</h4><p class="hint">Món quà này đã nhận giấc mơ trong những buổi sáng giữa núi rừng, và nay đã khép lại. Lời đáp của đêm vẫn nằm yên ở đây cho bạn giữ.</p></div>' : '<div class="sendbox"><h4>Cùng Yên đọc giấc mơ này</h4>'+
         '<p class="hint">Giấc mơ thường nói nhiều hơn những gì ta đọc được một mình. Bạn gửi lời đáp của đêm cho tôi, và nếu bạn muốn, chúng ta hẹn một cuộc trò chuyện ngắn trực tuyến để cùng đọc. Bạn luôn là người hiểu giấc mơ của mình nhất, còn tôi đi cùng bằng những câu hỏi.</p>'+
+        '<p class="hint">Tôi nhận giấc mơ tới hết ngày 25/11/2026.</p>'+
         '<label class="lab" for="f-mail2">Email của bạn</label>'+
         '<input class="field" id="f-mail2" type="email" autocomplete="email" value="'+esc(S.mail)+'" placeholder="ten@email.com">'+
         '<label class="lab" for="f-who2">Tên của bạn, nếu thích</label>'+
@@ -709,7 +735,7 @@ var Sound=(function(){
         '<textarea class="field" id="f-note" placeholder="Bạn viết bao nhiêu cũng được, hoặc để trống.">'+esc(S.note)+'</textarea>'+
         '<label class="chk"><input type="checkbox" id="f-ok"><span>Tôi đồng ý để Vũ Phi Yên lưu giấc mơ và những điều tôi viết ở đây, gửi lời đáp của đêm vào hộp thư của tôi và liên hệ với tôi về My Treasure Map.</span></label>'+
         '<div class="cave-nav"><button class="cbtn go" type="button" id="send">'+(S.sent?'Gửi lại cho Yên':'Gửi cho Yên')+'</button></div>'+
-        '<p class="warn" id="warn">'+(S.sent?'Giấc mơ này đã được gửi tới Yên.':'')+'</p></div>'+
+        '<p class="warn" id="warn">'+(S.sent?'Giấc mơ này đã được gửi tới Yên.':'')+'</p></div>')+
         '<div class="ending"><h4>Bạn vừa nghe tiếng nói của phần rộng lớn trong mình</h4>'+
         '<p>Mỗi đêm, Toàn thức đều trả lời, và người đi rừng nào biết lắng nghe nó sẽ ít khi lạc lối. Đây mới là một đêm nơi bìa rừng. Bên kia hàng cây là khu rừng của riêng bạn, với những hang ngọc đang chờ và ngọn núi bạn đang tìm.</p>'+
         '<div class="paths">'+
@@ -724,7 +750,7 @@ var Sound=(function(){
         '<div class="cave-nav minor">'+
         '<button class="cbtn" type="button" id="copy">Chép lời đáp của đêm</button>'+
         '<button class="cbtn" type="button" id="dl">Lưu thành ảnh</button>'+
-        '<button class="cbtn" type="button" id="again">Gửi một câu hỏi mới cho đêm nay</button></div>';
+        (phase()==='open'?'<button class="cbtn" type="button" id="again">Gửi một câu hỏi mới cho đêm nay</button>':'')+'</div>';
       return h; }
   ];
 
@@ -760,8 +786,13 @@ var Sound=(function(){
   }
 
   function render(scroll){
-    cave.innerHTML='<div class="fade">'+VIEWS[S.step]()+'</div>';
-    if(title) title.textContent = S.step>=5 ? 'Giấc mơ mang về' : (S.step===WAIT ? 'Chúc bạn ngủ ngon' : 'Gửi một câu hỏi vào đêm');
+    var ph=phase(), view=VIEWS[S.step];
+    if(ph==='closed' && S.step!==LAST) view=VIEW_CLOSED;
+    else if(ph==='dream' && S.step<WAIT) view=VIEW_DREAM_ONLY;
+    cave.innerHTML='<div class="fade">'+view()+'</div>';
+    if(title) title.textContent = view===VIEW_CLOSED ? 'Lời nhắn cuối từ Yên' : (view===VIEW_DREAM_ONLY ? 'Ghi giấc mơ sáng nay' : (S.step>=5 ? 'Giấc mơ mang về' : (S.step===WAIT ? 'Chúc bạn ngủ ngon' : 'Gửi một câu hỏi vào đêm')));
+    var td=document.getElementById('toDream');
+    if(td) td.addEventListener('click',function(){ S.step=5; save(); render(true); });
     var chips=cave.querySelectorAll('.chipq');
     for(var i=0;i<chips.length;i++){ chips[i].addEventListener('click',function(e){ var f=document.getElementById('f-q'); f.value=e.currentTarget.getAttribute('data-q'); f.focus(); Sound.plink(); }); }
     var next=document.getElementById('next'), back=document.getElementById('back');
@@ -861,7 +892,12 @@ var Sound=(function(){
   }
 
   if(S.step>LAST) S.step=0;
-  if(/^#sang/.test(location.hash) && S.step<5){ S.step=5; save(); }
+  (function(){
+    var ph=phase(), cta=document.getElementById('heroCta');
+    document.documentElement.classList.add('season-'+ph);
+    if(cta) cta.textContent = ph==='closed' ? 'Đọc lời nhắn cuối từ Yên' : (ph==='dream' ? 'Ghi giấc mơ sáng nay' : 'Viết lá thư gửi đêm');
+  })();
+  if(/^#sang/.test(location.hash) && S.step<5 && phase()!=='closed'){ S.step=5; save(); }
   render(false);
   if(/^#sang/.test(location.hash)){ setTimeout(function(){ var t=cave.getBoundingClientRect().top+window.scrollY-18; window.scrollTo({top:t}); },300); }
 })();

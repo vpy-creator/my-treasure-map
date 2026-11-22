@@ -292,6 +292,7 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .gl-night{background-image:var(--night-art);background-size:cover;background-position:50% 30%}
 .btn-night{background:var(--fig);border-color:var(--fig);color:#F5EFF4}
 :root[data-mode="dark"] .btn-night{color:#1D1524}
+.gl-when{display:block;font-size:14px;color:var(--cave-muted);margin:-.2rem 0 .8rem}
 </style>
 </head>
 <body>
@@ -418,13 +419,21 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
           <span class="gl-pic" aria-hidden="true"></span>
           <span class="gl-txt"><span class="gl-k">Món quà ban ngày</span><b>Dấu chấm đầu tiên: Bạn đang ở đây</b><span class="gl-go">Mở món quà</span></span>
         </a>
-        <a class="gift-link" href="hoi-va-toan-thuc-tra-loi/">
+        <a class="gift-link js-night-gift" href="hoi-va-toan-thuc-tra-loi/">
           <span class="gl-pic gl-night" aria-hidden="true"></span>
-          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-go">Mở món quà</span></span>
+          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-when">Mở tới hết ngày 25/11/2026</span><span class="gl-go">Mở món quà</span></span>
         </a>
       </div>
     </section>
 
+    <script>
+    (function(){ if(Date.now()<Date.parse('2026-11-26T00:00:00+07:00')) return;
+      var b=document.querySelector('.btn-night'); if(b) b.remove();
+      var c=document.querySelector('.js-night-gift'); if(!c) return;
+      var w=c.querySelector('.gl-when'); if(w) w.textContent='Đã khép lại sau mùa núi rừng';
+      var g=c.querySelector('.gl-go'); if(g) g.textContent='Đọc lời nhắn cuối';
+    })();
+    </script>
     <section class="sec" id="bon-ngay">
       <p class="eyebrow">Bốn ngày</p>
       <h2>Bốn ngày bên bếp lửa</h2>
