@@ -21,7 +21,9 @@ var CONFIG = {
   DAILY_CAP: 60,              // quá số thư này trong một ngày thì chỉ ghi Sheet, chờ Yên gửi tay
   SENDER_NAME: 'Vũ Phi Yên',
   SUBJECT: 'Dấu chấm đầu tiên trên tấm bản đồ của bạn',
-  BOOKING_URL: 'https://product-sprint-freebie-nov26.linhptn.chatgpt.site/offer/yen#dang-ky-offer'
+  BOOKING_URL: 'https://product-sprint-freebie-nov26.linhptn.chatgpt.site/offer/yen#dang-ky-offer',
+  COURSE_URL: 'https://my-treasure-map.vercel.app/',
+  GIFT_URL: 'https://my-treasure-map.vercel.app/dau-cham-dau-tien/'
 };
 
 function doPost(e) {
@@ -96,8 +98,9 @@ function letter(r) {
   if (r.note) {
     out += '<p style="' + p + '">Mình cũng đã nhận được những cảm nghĩ và câu hỏi bạn gửi kèm, và mình sẽ đọc thật kỹ.</p>';
   }
-  out += '<p style="' + p + '">Tấm thiếp này mới là một dấu chấm. Khi bạn muốn đi tiếp, mình mời bạn một cuộc trò chuyện chừng nửa giờ, để bạn và mình cùng xem những ngày vẽ bản đồ bên bếp lửa có hợp với bạn lúc này hay chưa.</p>';
-  out += '<p style="margin:0 0 22px;"><a href="' + CONFIG.BOOKING_URL + '" style="display:inline-block;background:#674B73;color:#F9F3F8;text-decoration:none;padding:12px 24px;border-radius:999px;">Trò chuyện cùng Yên</a></p>';
+  out += '<p style="' + p + '">Đây là bước xác định chỗ bạn đang đứng nơi bìa rừng. Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây.</p>';
+  out += '<p style="margin:0 0 22px;"><a href="' + CONFIG.COURSE_URL + '" style="display:inline-block;background:#674B73;color:#F9F3F8;text-decoration:none;padding:12px 24px;border-radius:999px;">Xem hành trình My Treasure Map</a></p>';
+  out += '<p style="' + p + '">Tấm thiếp của bạn vẫn nằm ở <a href="' + CONFIG.GIFT_URL + '" style="color:#674B73;">trang món quà</a>, trên trình duyệt bạn đã dùng. Nếu bạn muốn trò chuyện trước khi quyết định, mình luôn sẵn lòng dành cho bạn <a href="' + CONFIG.BOOKING_URL + '" style="color:#674B73;">chừng nửa giờ trò chuyện</a>.</p>';
   out += '<p style="margin:0;">Thân mến,<br>Vũ Phi Yên<br><span style="color:#7B6A80;font-size:14px;">My Treasure Map, EarthWise VN</span></p>';
   return out + '</div>';
 }
@@ -111,7 +114,9 @@ function plainText(r) {
     'Điều Linh thần tối lo: ' + r.a2 + '\n\n' +
     'Điều Linh thần tối chờ thấy: ' + r.a3 + '\n\n' +
     'Bước đầu tiên của bạn: ' + r.deed + (r.day ? ' Hẹn vào ' + r.day + '.' : '') + '\n\n' +
-    'Khi bạn muốn đi tiếp, mình mời bạn một cuộc trò chuyện chừng nửa giờ: ' + CONFIG.BOOKING_URL + '\n\n' +
+    'Đây là bước xác định chỗ bạn đang đứng nơi bìa rừng. Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây: ' + CONFIG.COURSE_URL + '\n\n' +
+    'Tấm thiếp của bạn vẫn nằm ở trang món quà: ' + CONFIG.GIFT_URL + '\n' +
+    'Nếu bạn muốn trò chuyện trước khi quyết định: ' + CONFIG.BOOKING_URL + '\n\n' +
     'Thân mến,\nVũ Phi Yên\nMy Treasure Map, EarthWise VN';
 }
 
