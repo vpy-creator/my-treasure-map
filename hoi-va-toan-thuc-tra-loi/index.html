@@ -21,7 +21,7 @@
   --body:'Be Vietnam Pro','Segoe UI',sans-serif;
   --quote:'Lora',Georgia,serif;
   --map:url(../assets/ban-do.jpg);
-  --night:url(../assets/dem.jpg);
+  --night-art:url(../assets/dem.jpg);
 }
 :root[data-mode="dark"]{
   --bg:#1D1524; --bg-soft:#261B2E; --panel:#2E2137;
@@ -325,10 +325,10 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
   .card{padding:24px 18px}
   .path{padding:18px 15px}
 }
-.night-art{background:var(--cave) var(--night) center/cover no-repeat!important}
+.night-art{background:var(--cave) var(--night-art) center/cover no-repeat!important}
 .noart .night-art{background:radial-gradient(circle at 60% 14%,#F3DDB0 0,#D7A38E 6%,#7A5683 30%,#35243E 72%)!important}
-.v-night-sky{background-image:var(--night);background-position:50% 4%}
-.v-night-letter{background-image:var(--night);background-position:50% 48%}
+.v-night-sky{background-image:var(--night-art);background-position:50% 4%}
+.v-night-letter{background-image:var(--night-art);background-position:50% 48%}
 .v-dawn{background-image:var(--map);background-position:50% 0%}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:.2rem 0 1rem}
 .chipq{font:inherit;font-size:14.5px;line-height:1.5;min-height:40px;padding:.4rem .95rem;border-radius:999px;cursor:pointer;
