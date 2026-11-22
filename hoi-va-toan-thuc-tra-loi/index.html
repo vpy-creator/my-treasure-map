@@ -378,9 +378,9 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
       </div>
       <div class="season" id="season">
         <p class="season-k">Món quà của một mùa ngắn</p>
-        <p>Cuối tháng Mười Một này, tôi ở giữa một vùng núi rừng rộng mở. Nơi đó tâm trí được lắng xuống, và tôi nghe Toàn thức rõ hơn, cho chính mình và cho cả những người đang cùng mơ. Vì vậy, tôi mở món quà này trong một quãng thời gian ngắn, để đón giấc mơ của bạn từ chính nơi lắng nghe ấy.</p>
-        <p class="ph-open">Tôi nhận giấc mơ vào những buổi sáng từ 23 đến 25/11/2026, rồi trang này khép lại.</p>
-        <p class="ph-open">Đêm 24/11 là đêm cuối để bạn gửi lá thư, để giấc mơ kịp mang lời đáp về trong buổi sáng cuối cùng.</p>
+        <p>Cuối tháng 11 này, Yên có một tuần được thênh thang sống giữa một vùng núi rừng rộng mở. Hòa vào không gian nơi này, tâm trí được lắng xuống, và Yên nghe được Toàn thức rõ hơn, cho chính mình và cho cả những người đang cùng mơ. Vì vậy, mình mở món quà này trong quãng thời gian mà mình còn ở nơi này, để đón giấc mơ của bạn.</p>
+        <p class="ph-open">Vì thế, trang này sẽ nhận giấc mơ vào ba buổi sáng, từ 24 đến 26/11/2026, rồi trang này khép lại.</p>
+        <p class="ph-open">Đêm 25/11 là đêm cuối để bạn gửi lá thư vào đêm, để giấc mơ kịp mang lời đáp về trong buổi sáng 26 trước khi khung cửa tạm khép lại.</p>
         <p class="ph-closed">Những buổi sáng nghe giấc mơ ấy đã trọn vẹn, và món quà đã khép lại.</p>
       </div>
       <div class="btn-row">
@@ -612,11 +612,11 @@ var Sound=(function(){
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   var LAST=7, WAIT=4;
-  /* Mùa nhận giấc mơ, giờ Việt Nam: thư gửi đêm tới rạng sáng 25/11, giấc mơ tới hết ngày 25/11/2026 */
-  var LETTER_END=Date.parse('2026-11-25T05:00:00+07:00'), DREAM_END=Date.parse('2026-11-26T00:00:00+07:00');
+  /* Mùa nhận giấc mơ, giờ Việt Nam: thư gửi đêm tới rạng sáng 26/11, giấc mơ tới hết ngày 26/11/2026 */
+  var LETTER_END=Date.parse('2026-11-26T05:00:00+07:00'), DREAM_END=Date.parse('2026-11-27T00:00:00+07:00');
   function phase(){ var t=Date.now(); return t<LETTER_END?'open':(t<DREAM_END?'dream':'closed'); }
   var VIEW_DREAM_ONLY=function(){ return '<h3>Buổi sáng cuối cùng</h3>'+
-      '<p class="scene">Những đêm gửi thư đã khép lại. Nếu câu hỏi của bạn đã lên đường từ đêm qua, giấc mơ sáng nay vẫn kịp tìm tới tôi cho tới hết ngày 25/11/2026.</p>'+
+      '<p class="scene">Những đêm gửi thư đã khép lại. Nếu câu hỏi của bạn đã lên đường từ đêm qua, giấc mơ sáng nay vẫn kịp tìm tới tôi cho tới hết ngày 26/11/2026.</p>'+
       '<div class="cave-nav"><button class="cbtn go" type="button" id="toDream">Ghi giấc mơ sáng nay</button></div>'; };
   var VIEW_CLOSED=function(){ return '<h3>Món quà của đêm đã khép lại</h3>'+
       '<div class="vig v-night-sky" aria-hidden="true"></div>'+
@@ -725,7 +725,7 @@ var Sound=(function(){
         '</dl><p class="cf">My Treasure Map, cùng Vũ Phi Yên</p></article>'+
         (phase()==='closed' ? '<div class="sendbox"><h4>Những buổi sáng nghe giấc mơ đã khép lại</h4><p class="hint">Món quà này đã nhận giấc mơ trong những buổi sáng giữa núi rừng, và nay đã khép lại. Lời đáp của đêm vẫn nằm yên ở đây cho bạn giữ.</p></div>' : '<div class="sendbox"><h4>Cùng Yên đọc giấc mơ này</h4>'+
         '<p class="hint">Giấc mơ thường nói nhiều hơn những gì ta đọc được một mình. Bạn gửi lời đáp của đêm cho tôi, và nếu bạn muốn, chúng ta hẹn một cuộc trò chuyện ngắn trực tuyến để cùng đọc. Bạn luôn là người hiểu giấc mơ của mình nhất, còn tôi đi cùng bằng những câu hỏi.</p>'+
-        '<p class="hint">Tôi nhận giấc mơ tới hết ngày 25/11/2026.</p>'+
+        '<p class="hint">Tôi nhận giấc mơ tới hết ngày 26/11/2026.</p>'+
         '<label class="lab" for="f-mail2">Email của bạn</label>'+
         '<input class="field" id="f-mail2" type="email" autocomplete="email" value="'+esc(S.mail)+'" placeholder="ten@email.com">'+
         '<label class="lab" for="f-who2">Tên của bạn, nếu thích</label>'+
