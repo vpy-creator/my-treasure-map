@@ -293,6 +293,16 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .btn-night{background:var(--fig);border-color:var(--fig);color:#F5EFF4}
 :root[data-mode="dark"] .btn-night{color:#1D1524}
 .gl-when{display:block;font-size:14px;color:var(--cave-muted);margin:-.2rem 0 .8rem}
+.seat{margin:2rem 0 2.4rem;max-width:860px;border-radius:22px;overflow:hidden;background:var(--cave);color:var(--cave-ink);display:grid;box-shadow:0 18px 40px -26px rgba(40,20,50,.55)}
+.seat-txt{padding:30px 28px 28px;border-left:4px solid var(--cave-accent)}
+.seat h3{color:var(--cave-ink);margin:.3rem 0 .6rem}
+.seat p{color:var(--cave-muted)}
+.seat .seat-k{margin:0;font-size:12.5px;letter-spacing:3px;text-transform:uppercase;color:var(--cave-accent)}
+.seat .btn-primary{background:var(--cave-accent);border-color:var(--cave-accent);color:#2E1D27}
+.seat small{display:block;margin-top:.8rem;font-size:14px;color:var(--cave-muted)}
+.btn-ghost{background:transparent;border-color:var(--cave-hair);color:var(--cave-ink)}
+.closing .btn-row{margin-top:1.4rem}
+.floor dd a{color:var(--accent-deep);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -326,7 +336,7 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
         <a class="btn btn-night" href="hoi-va-toan-thuc-tra-loi/">Gửi một câu hỏi vào đêm</a>
         <a class="btn js-book" href="#" target="_blank" rel="noopener">Trò chuyện cùng Yên</a>
       </div>
-      <p class="when">Bốn ngày bên bếp lửa cùng Vũ Phi Yên, để mỗi người tự tay vẽ tấm bản đồ của riêng mình. Dự kiến sau Tết Âm lịch 2027, cho nhóm nhỏ ngồi vừa quanh chiếc bàn tròn.</p>
+      <p class="when">Bốn ngày bên bếp lửa cùng Vũ Phi Yên, để mỗi người tự tay vẽ tấm bản đồ của riêng mình. cho nhóm nhỏ ngồi vừa quanh chiếc bàn tròn. Hành trình diễn ra từ ngày 11 đến 14/03/2027.</p>
     </div>
     <div class="arch-box">
       <div class="arch" role="img" aria-label="Tấm bản đồ vẽ tay: người lữ khách giữa những vòng dấu chân nơi bìa rừng, tấm bản đồ mở sẵn ở cửa rừng, lối mòn xuyên rừng sương qua những hang giữ ngọc có bóng đen đứng gác, và quầng sáng rực rỡ trên một đỉnh núi giữa biển mây."></div>
@@ -421,13 +431,13 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
         </a>
         <a class="gift-link js-night-gift" href="hoi-va-toan-thuc-tra-loi/">
           <span class="gl-pic gl-night" aria-hidden="true"></span>
-          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-when">Mở tới hết ngày 26/11/2026</span><span class="gl-go">Mở món quà</span></span>
+          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-when">Mở tới hết ngày 25/11/2026</span><span class="gl-go">Mở món quà</span></span>
         </a>
       </div>
     </section>
 
     <script>
-    (function(){ if(Date.now()<Date.parse('2026-11-27T00:00:00+07:00')) return;
+    (function(){ if(Date.now()<Date.parse('2026-11-26T00:00:00+07:00')) return;
       var b=document.querySelector('.btn-night'); if(b) b.remove();
       var c=document.querySelector('.js-night-gift'); if(!c) return;
       var w=c.querySelector('.gl-when'); if(w) w.textContent='Đã khép lại sau mùa núi rừng';
@@ -563,17 +573,26 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
       <dl class="floor">
         <div><dt>Hình thức</dt><dd>Retreat nhóm nhỏ, mọi người ở lại cùng nhau trọn bốn ngày.</dd></div>
         <div><dt>Quy mô</dt><dd>Tối đa tám người trong đợt đầu, để ai cũng được lắng nghe trọn vẹn.</dd></div>
-        <div><dt>Thời điểm</dt><dd>Dự kiến sau Tết Âm lịch, vào khoảng giữa tháng 2 năm 2027, và ngày cụ thể sẽ có trong thư gửi bạn.</dd></div>
-        <div><dt>Địa điểm</dt><dd>Một nơi yên tĩnh gần thiên nhiên, đang được chốt.</dd></div>
-        <div><dt>Học phí</dt><dd>Chương trình giữ cùng một mức học phí cho mọi người, đã gồm chương trình, học liệu và ăn ở. Phần đi lại bạn tự thu xếp.</dd></div>
-        <div><dt>Giấy trắng mực đen</dt><dd>Sau cuộc trò chuyện, bạn nhận bằng văn bản mức học phí, lịch, nơi chốn và điều khoản đổi lịch, hoàn phí, rồi mới quyết định.</dd></div>
+        <div><dt>Thời điểm</dt><dd>Từ ngày 11 đến ngày 14/03/2027.</dd></div>
+        <div><dt>Địa điểm</dt><dd>Nếu nhóm được thành lập sớm, hành trình sẽ diễn ra ở Flowcation: Khu Đồi Dựng, đường tổ 23, thôn Hiệp Thuận, Ninh Gia, Đức Trọng, Lâm Đồng. <a href="https://www.google.com/maps?q=Flowcation,+Khu+%C4%90%E1%BB%93i+D%E1%BB%B1ng,+%C4%91%C6%B0%E1%BB%9Dng+t%E1%BB%95+23,+th%C3%B4n+Hi%E1%BB%87p+Thu%E1%BA%ADn,+Ninh+Gia,+L%C3%A2m+%C4%90%E1%BB%93ng" target="_blank" rel="noopener">Xem đường tới Flowcation</a></dd></div>
+        <div><dt>Học phí</dt><dd>30.000.000 đồng cho trọn hành trình, đã gồm chương trình, học liệu và ăn ở. Phần đi lại bạn tự thu xếp.</dd></div>
+        <div><dt>Giấy trắng mực đen</dt><dd>Nếu muốn, bạn trò chuyện cùng tôi trước, nhận bằng văn bản lịch trình chi tiết cùng điều khoản đổi lịch và hoàn phí, rồi mới quyết định.</dd></div>
       </dl>
+      <div class="seat">
+        <div class="seat-txt">
+          <p class="seat-k">Dành cho nhóm đến sớm</p>
+          <h3>Giữ chỗ bên bàn tròn ở Flowcation</h3>
+          <p>Nếu nhóm đầu tiên được thành lập ngay, hành trình này sẽ diễn ra ở nơi tuyệt nhất trong tâm trí tôi lúc này: Flowcation, giữa vùng đồi Ninh Gia của Đức Trọng, Lâm Đồng. Ở đó trời đất rộng mở, sương sớm phủ trên những ngọn đồi, và mỗi buổi tối chúng ta ngồi bên nhau trong yên tĩnh trọn vẹn.</p>
+          <div class="btn-row"><a class="btn btn-primary" href="https://gateway.solo2os.com/pay/cudjg2xt" target="_blank" rel="noopener">Đăng ký và giữ chỗ</a></div>
+          <small>Trang thanh toán mở trong một thẻ mới.</small>
+        </div>
+      </div>
       <h3>Đường vào</h3>
       <ol class="steps">
         <li>Đặt dấu chấm đầu tiên bằng <a href="dau-cham-dau-tien/">món quà bên bìa rừng</a>, nếu bạn muốn.</li>
         <li>Gửi đơn trò chuyện. Tôi hồi âm trong vòng hai ngày để hẹn cuộc trò chuyện đầu tiên, miễn phí và dài chừng nửa giờ.</li>
         <li>Nhận đầy đủ thông tin bằng văn bản và thong thả cân nhắc.</li>
-        <li>Khi cả bạn và tôi cùng thấy hợp, bạn giữ chỗ của mình bên bàn tròn.</li>
+        <li>Khi bạn thấy đã hợp, bạn giữ chỗ của mình bên bàn tròn bằng nút <a href="https://gateway.solo2os.com/pay/cudjg2xt" target="_blank" rel="noopener">Đăng ký và giữ chỗ</a>.</li>
       </ol>
       <p class="bound">My Treasure Map là chương trình giáo dục và phát triển cá nhân, do một nhà tâm lý lâm sàng thiết kế và dẫn dắt. Bạn là người tự chọn hướng đi của mình. Chẩn đoán, trị liệu và can thiệp khẩn cấp về sức khoẻ tâm thần nằm ngoài phạm vi của chương trình. Mọi điều được chia sẻ trong nhóm đều được giữ kín, và lời của bạn chỉ được trích khi bạn đồng ý. Chương trình trao cho bạn một tấm bản đồ và một người đồng hành, còn khu rừng cùng những gì nở ra trên đường thuộc về bước chân của bạn.</p>
     </section>
@@ -604,7 +623,7 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
     <div class="txt">
       <h2>Cửa rừng vẫn ở đó, và tấm bản đồ đang chờ người vẽ</h2>
       <p>Phần còn lại là cuộc trò chuyện giữa bạn và tôi. Bạn mang theo câu hỏi của mình, và nếu có, cả tấm thiếp ghi dấu chấm đầu tiên. Tôi mang theo ấm trà, sự lắng nghe, và câu trả lời thật lòng về việc tấm bản đồ này có hợp với bạn lúc này hay chưa.</p>
-      <a class="btn btn-primary js-book" href="#" target="_blank" rel="noopener">Trò chuyện cùng Yên</a>
+      <div class="btn-row"><a class="btn btn-primary" href="https://gateway.solo2os.com/pay/cudjg2xt" target="_blank" rel="noopener">Đăng ký và giữ chỗ</a><a class="btn btn-ghost js-book" href="#" target="_blank" rel="noopener">Trò chuyện cùng Yên</a></div>
       <small>Chừng nửa giờ, miễn phí. Gửi đơn trò chuyện chưa phải là ghi danh.</small>
     </div>
     <div class="pic" role="img" aria-label="Quầng sáng trên đỉnh núi giữa biển mây."></div>
