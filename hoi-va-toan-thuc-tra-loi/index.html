@@ -374,7 +374,7 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
       <p class="lead">Đêm nay bạn gửi đi một câu hỏi. Sáng mai, giấc mơ mang lời đáp trở về.</p>
       <div class="prose intro">
         <p>Khi ta ngủ, phần tâm trí lo toan ban ngày đặt bút xuống, và một phần rộng lớn hơn của ta lên tiếng. Tôi gọi phần ấy là Toàn thức: phần tâm trí rộng lớn bao trùm tất thảy, nơi những tạo tác mới được hình thành. Khái niệm này khởi nguồn từ Olivier Lockert, trong bộ sách <em>Những người tạo ra hiện thực</em> mà tôi đã dịch sang tiếng Việt.</p>
-        <p>Người xưa ở nhiều nền văn hoá đều biết một cách trò chuyện với phần rộng lớn ấy: trước khi ngủ, họ gửi vào đêm một câu hỏi thật lòng, rồi sáng ra ghi lại điều giấc mơ mang về. Món quà này dẫn bạn đi trọn một vòng như thế. Tối nay, bạn viết lá thư gửi Trí tuệ của đêm. Sáng mai, bạn quay lại trang này để ghi giấc mơ, tự đọc nó qua vài câu hỏi dẫn, và nếu muốn, gửi cho tôi để chúng ta cùng đọc trong một cuộc trò chuyện ngắn.</p>
+        <p>Người xưa ở nhiều nền văn hoá đều biết một cách trò chuyện với phần rộng lớn ấy: trước khi ngủ, họ gửi vào đêm một câu hỏi thật lòng, rồi sáng ra ghi lại điều giấc mơ mang về. Món quà này dẫn bạn đi trọn một vòng như thế. Tối nay, bạn viết lá thư gửi Trí tuệ của đêm. Sáng mai, bạn quay lại trang này để ghi giấc mơ, tự đọc nó qua vài câu hỏi dẫn, và nếu muốn, gửi cho Yên. Yên sẽ hồi âm giấc mơ của bạn bằng thư.</p>
       </div>
       <div class="season" id="season">
         <p class="season-k">Món quà của một mùa ngắn</p>
@@ -606,7 +606,7 @@ var Sound=(function(){
   var cave=document.getElementById('cave'), title=document.getElementById('giftTitle');
   var KEY='mtm-hoi-toan-thuc';
   var CHIPS=['Việc của đời tôi là gì?','Con đường nào dành cho tôi lúc này?','Điều gì đang giữ chân tôi lại?','Bước đầu tiên của tôi nên là gì?'];
-  var BLANK={step:0,q:'',letter:'',who:'',mail:'',remind:false,sentAt:0,dream:'',wake:'',image:'',reading:'',talk:true,note:'',sent:false};
+  var BLANK={step:0,q:'',letter:'',who:'',mail:'',remind:false,sentAt:0,dream:'',wake:'',image:'',reading:'',talk:false,note:'',sent:false};
   var S={}; for(var k0 in BLANK){ S[k0]=BLANK[k0]; }
   try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw); for(var k in S){ if(o[k]!==undefined) S[k]=o[k]; } } }catch(e){}
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
@@ -712,7 +712,7 @@ var Sound=(function(){
       area('f-image',S.image,'Một căn phòng, một người, một màu sắc, một con vật...')+
       '<p class="ask">Nếu hình ảnh ấy là một lời đáp cho câu hỏi đêm qua, nó đang nói gì với bạn?</p><label class="sr" for="f-reading">Điều bạn nghe thấy</label>'+
       area('f-reading',S.reading,'Có lẽ nó đang nói rằng...')+
-      '<p class="hint">Nếu giấc mơ để lại cảm giác nặng nề, bạn cứ dừng lại, thở chậm, uống một ngụm nước. Bạn có thể mang nó tới cuộc trò chuyện với tôi.</p>'+nav('Nhận lời đáp của đêm'); },
+      '<p class="hint">Nếu giấc mơ để lại cảm giác nặng nề, bạn cứ dừng lại, thở chậm, uống một ngụm nước. Bạn cũng có thể gửi nó cho tôi ở bước sau, tôi sẽ đọc cùng bạn.</p>'+nav('Nhận lời đáp của đêm'); },
     function(){
       var h='<h3>Lời đáp của đêm</h3><p class="scene">Bạn vừa nghe được tiếng nói của Toàn thức, bằng thứ ngôn ngữ của riêng nó.</p>'+
         '<article class="card" id="card"><p class="ce">Hỏi và Toàn thức trả lời</p><h4>Lời đáp của đêm</h4>'+
@@ -724,14 +724,13 @@ var Sound=(function(){
         '<div><dt>Điều tôi nghe thấy</dt><dd>'+esc(S.reading)+'</dd></div>'+
         '</dl><p class="cf">My Treasure Map, cùng Vũ Phi Yên</p></article>'+
         (phase()==='closed' ? '<div class="sendbox"><h4>Những buổi sáng nghe giấc mơ đã khép lại</h4><p class="hint">Món quà này đã nhận giấc mơ trong những buổi sáng giữa núi rừng, và nay đã khép lại. Lời đáp của đêm vẫn nằm yên ở đây cho bạn giữ.</p></div>' : '<div class="sendbox"><h4>Cùng Yên đọc giấc mơ này</h4>'+
-        '<p class="hint">Giấc mơ thường nói nhiều hơn những gì ta đọc được một mình. Bạn gửi lời đáp của đêm cho tôi, và nếu bạn muốn, chúng ta hẹn một cuộc trò chuyện ngắn trực tuyến để cùng đọc. Bạn luôn là người hiểu giấc mơ của mình nhất, còn tôi đi cùng bằng những câu hỏi.</p>'+
+        '<p class="hint">Giấc mơ thường nói nhiều hơn những gì ta đọc được một mình. Bạn gửi lời đáp của đêm cho tôi, và Yên sẽ hồi âm giấc mơ của bạn bằng thư. Bạn luôn là người hiểu giấc mơ của mình nhất, còn tôi đi cùng bằng những câu hỏi.</p>'+
         '<p class="hint">Tôi nhận giấc mơ tới hết ngày 25/11/2026.</p>'+
         '<label class="lab" for="f-mail2">Email của bạn</label>'+
         '<input class="field" id="f-mail2" type="email" autocomplete="email" value="'+esc(S.mail)+'" placeholder="ten@email.com">'+
         '<label class="lab" for="f-who2">Tên của bạn, nếu thích</label>'+
         '<input class="field" id="f-who2" type="text" maxlength="40" value="'+esc(S.who)+'" placeholder="Tên của bạn">'+
-        '<label class="chk"><input type="checkbox" id="f-talk"'+(S.talk?' checked':'')+'><span>Tôi muốn hẹn Yên một cuộc trò chuyện ngắn trực tuyến để cùng đọc giấc mơ này.</span></label>'+
-        '<label class="lab" for="f-note">Điều bạn muốn hỏi thêm, hoặc khung giờ thuận tiện cho bạn</label>'+
+        '<label class="lab" for="f-note">Điều bạn muốn hỏi thêm về giấc mơ này</label>'+
         '<textarea class="field" id="f-note" placeholder="Bạn viết bao nhiêu cũng được, hoặc để trống.">'+esc(S.note)+'</textarea>'+
         '<label class="chk"><input type="checkbox" id="f-ok"><span>Tôi đồng ý để Vũ Phi Yên lưu giấc mơ và những điều tôi viết ở đây, gửi lời đáp của đêm vào hộp thư của tôi và liên hệ với tôi về My Treasure Map.</span></label>'+
         '<div class="cave-nav"><button class="cbtn go" type="button" id="send">'+(S.sent?'Gửi lại cho Yên':'Gửi cho Yên')+'</button></div>'+
@@ -833,13 +832,13 @@ var Sound=(function(){
   }
   function send(){
     var mail=val('f-mail2').trim(), ok=document.getElementById('f-ok').checked;
-    S.mail=mail; S.who=val('f-who2'); S.note=val('f-note'); S.talk=document.getElementById('f-talk').checked; save();
+    S.mail=mail; S.who=val('f-who2'); S.note=val('f-note'); S.talk=false; save();
     if(!EMAIL_RE.test(mail)){ say('Bạn xem lại giúp địa chỉ email nhé.'); return; }
     if(!ok){ say('Bạn đánh dấu vào ô đồng ý giúp, để tôi được phép đọc giấc mơ và hồi âm cho bạn.'); return; }
     if(!CFG.NIGHT_ENDPOINT){ say('Sổ nhận giấc mơ đang được nối. Trong lúc chờ, bạn chép lời đáp của đêm để giữ cho mình nhé.'); return; }
     var btn=document.getElementById('send'); btn.disabled=true; say('Giấc mơ đang lên đường tới Yên...');
     post({kind:'mo',consent:true,email:mail,name:S.who,q:S.q,letter:S.letter,dream:S.dream,wake:S.wake,image:S.image,reading:S.reading,talk:S.talk,note:S.note})
-      .then(function(){ S.sent=true; save(); say(S.talk?'Giấc mơ đã tới tay Yên. Tôi sẽ hồi âm qua email để hẹn giờ trò chuyện, và lời đáp của đêm đang trên đường tới hộp thư của bạn.':'Giấc mơ đã tới tay Yên, và lời đáp của đêm đang trên đường tới hộp thư của bạn.'); btn.disabled=false; btn.textContent='Gửi lại cho Yên'; Dust.from(btn,40); Sound.sparkle(); })
+      .then(function(){ S.sent=true; save(); say('Giấc mơ đã tới tay Yên. Yên sẽ hồi âm giấc mơ của bạn bằng thư, và lời đáp của đêm đang trên đường tới hộp thư của bạn.'); btn.disabled=false; btn.textContent='Gửi lại cho Yên'; Dust.from(btn,40); Sound.sparkle(); })
       .catch(function(){ btn.disabled=false; say('Đường truyền đang trục trặc. Bạn thử lại sau ít phút, hoặc chép lời đáp của đêm để giữ cho mình.'); });
   }
 
