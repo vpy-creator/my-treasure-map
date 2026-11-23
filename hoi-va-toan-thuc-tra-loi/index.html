@@ -605,7 +605,7 @@ var Sound=(function(){
 (function(){
   var cave=document.getElementById('cave'), title=document.getElementById('giftTitle');
   var KEY='mtm-hoi-toan-thuc';
-  var CHIPS=['Việc của đời tôi là gì?','Con đường nào dành cho tôi lúc này?','Điều gì đang giữ chân tôi lại?','Bước đầu tiên của tôi nên là gì?'];
+  var CHIPS=['Việc lớn của đời tôi là gì?','Con đường nào dành cho tôi lúc này?','Điều gì đang giữ chân tôi lại?','Bước đầu tiên của tôi nên là gì?'];
   var BLANK={step:0,q:'',letter:'',who:'',mail:'',remind:false,sentAt:0,dream:'',wake:'',image:'',reading:'',talk:false,note:'',sent:false};
   var S={}; for(var k0 in BLANK){ S[k0]=BLANK[k0]; }
   try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw); for(var k in S){ if(o[k]!==undefined) S[k]=o[k]; } } }catch(e){}
