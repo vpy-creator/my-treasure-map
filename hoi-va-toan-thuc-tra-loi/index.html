@@ -311,6 +311,7 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .path p{font-size:15.5px;line-height:1.75;color:var(--cave-muted);margin-bottom:1rem}
 .path .cave-nav{margin-top:auto}
 .save-hint{font-size:14px;line-height:1.65;color:var(--cave-muted);margin:.8rem 0 0}
+.ask-line{font-size:15px;line-height:1.7;color:var(--cave-muted);margin:1.4rem 0 0}.ask-line a{color:var(--cave-accent);text-underline-offset:3px}
 .minor{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--cave-hair)}
 .minor .cbtn{min-height:44px;font-size:14.5px;padding:.4rem 1.1rem}
 #mon-qua.sec{border-left:none;margin-left:0;padding-left:0}
@@ -419,11 +420,10 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 var CFG = {
   COURSE_URL: 'https://my-treasure-map.vercel.app/',
   NIGHT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwAF0HlKhH8eaAl4_I1Wo2HQMoUnpBWV0JZsAZvxbMn_gl1H0PvlssbWOWckj5jwo1MIg/exec',
-  BOOKING_URL: 'https://product-sprint-freebie-nov26.linhptn.chatgpt.site/offer/yen#dang-ky-offer',
+  ASK_URL: '../viet-cho-yen/?tu=toan-thuc',
   ENDPOINT: 'https://script.google.com/macros/s/AKfycbyxJ0UFruthjMgBRSfPk_nG9rMHrbGm42fOMGUdz_3qKSLfTN6z4kZvnXloaN1r2QAB/exec',  /* sổ nhận thiếp (Apps Script) */
   MUSIC_URL: '../assets/nhac-nen.mp3'  /* file nhạc nền đặt cạnh index.html; thiếu file thì trang tự tạo tiếng giọt nước */
 };
-(function(){ var a=document.querySelectorAll('.js-book'); for(var i=0;i<a.length;i++){ a[i].href=CFG.BOOKING_URL; } })();
 
 /* ===== SÁNG / TỐI: sáng luôn là mặc định ===== */
 (function(){
@@ -745,7 +745,9 @@ var Sound=(function(){
         '<p>Lời đáp của đêm nằm yên ở đây, trên trình duyệt này. Khi tâm hồn bạn nói đã đến lúc, bạn quay lại và lên đường.</p>'+
         '<div class="cave-nav"><button class="cbtn" type="button" id="copyLink">Chép đường link trang</button></div>'+
         '<p class="save-hint">'+hint()+'</p><p class="warn" id="saveWarn"></p></div>'+
-        '</div></div>'+
+        '</div>'+
+        '<p class="ask-line">Nếu bạn có thắc mắc về tiếng gọi của tạo tác, hay về hành trình xuyên rừng, bạn cứ <a href="'+CFG.ASK_URL+'">viết cho tôi</a>. Tôi đọc từng thông điệp và hồi âm bằng thư.</p>'+
+        '</div>'+
         '<div class="cave-nav minor">'+
         '<button class="cbtn" type="button" id="copy">Chép lời đáp của đêm</button>'+
         '<button class="cbtn" type="button" id="dl">Lưu thành ảnh</button>'+

@@ -12,7 +12,7 @@ var CONFIG = {
   NOTIFY_YEN: true,           // báo cho Yên mỗi khi có giấc mơ mới
   GIFT_URL: 'https://my-treasure-map.vercel.app/hoi-va-toan-thuc-tra-loi/',
   COURSE_URL: 'https://my-treasure-map.vercel.app/',
-  BOOKING_URL: 'https://product-sprint-freebie-nov26.linhptn.chatgpt.site/offer/yen#dang-ky-offer'
+  ASK_URL: 'https://my-treasure-map.vercel.app/viet-cho-yen/'
 };
 
 function doPost(e) {
@@ -26,7 +26,7 @@ function doPost(e) {
     var r = {
       name: clean(d.name, 80), email: email, q: clean(d.q, 600), letter: clean(d.letter, 4000),
       dream: clean(d.dream, 6000), wake: clean(d.wake, 300), image: clean(d.image, 1500),
-      reading: clean(d.reading, 2000), talk: d.talk === true, note: clean(d.note, 2000)
+      reading: clean(d.reading, 2000), note: clean(d.note, 2000)
     };
     if (d.kind === 'dem') {
       ss.getSheetByName(CONFIG.TAB_NIGHT).appendRow([
@@ -38,7 +38,7 @@ function doPost(e) {
       var mail = deliver(r.email, 'Lời đáp của đêm', dreamPlain(r), dreamHtml(r));
       ss.getSheetByName(CONFIG.TAB_DREAM).appendRow([
         new Date(), safe(r.name), safe(r.email), safe(r.q), safe(r.letter), safe(r.dream), safe(r.wake),
-        safe(r.image), safe(r.reading), r.talk ? 'Có' : 'Không', safe(r.note), 'Có', mail, '', ''
+        safe(r.image), safe(r.reading), 'Yên hồi âm bằng thư', safe(r.note), 'Có', mail, '', ''
       ]);
       if (CONFIG.NOTIFY_YEN) notifyYen(r);
       return json({ status: 'ok' });
@@ -142,12 +142,10 @@ function dreamHtml(r) {
   if (r.wake) o += '<p style="' + STY.lab + '">Lúc thức dậy</p><p style="margin:6px 0 18px;">' + esc(r.wake) + '</p>';
   o += '<p style="' + STY.lab + '">Hình ảnh còn đọng lại</p><p style="' + STY.box + '">' + esc(r.image) + '</p>';
   o += '<p style="' + STY.lab + '">Điều bạn nghe thấy</p><p style="margin:6px 0 22px;">' + esc(r.reading) + '</p>';
-  if (r.talk) {
-    o += '<p style="' + STY.p + '">Mình đã nhận lời hẹn của bạn. Trong vài ngày tới mình sẽ hồi âm qua email để chọn giờ cho một cuộc trò chuyện ngắn trực tuyến, nơi chúng ta cùng đọc giấc mơ này. Bạn luôn là người hiểu giấc mơ của mình nhất, còn mình đi cùng bằng những câu hỏi.</p>';
-  }
+  o += '<p style="' + STY.p + '">Mình sẽ đọc giấc mơ này thật chậm và hồi âm bạn bằng thư. Bạn luôn là người hiểu giấc mơ của mình nhất, còn mình đi cùng bằng những câu hỏi.</p>';
   o += '<p style="' + STY.p + '">Đây mới là một đêm nơi bìa rừng. Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây.</p>';
   o += '<p style="margin:0 0 22px;"><a href="' + CONFIG.COURSE_URL + '" style="' + STY.btn + '">Xem hành trình My Treasure Map</a></p>';
-  o += '<p style="' + STY.p + '">Mỗi đêm bạn đều có thể gửi một câu hỏi mới ở <a href="' + CONFIG.GIFT_URL + '" style="' + STY.link + '">trang món quà</a>.</p>';
+  o += '<p style="' + STY.p + '">Mỗi đêm bạn đều có thể gửi một câu hỏi mới ở <a href="' + CONFIG.GIFT_URL + '" style="' + STY.link + '">trang món quà</a>. Và nếu bạn có thắc mắc về tiếng gọi của tạo tác, hay về hành trình My Treasure Map, bạn cứ <a href="' + CONFIG.ASK_URL + '" style="' + STY.link + '">viết cho mình</a>.</p>';
   return o + sign() + '</div>';
 }
 function dreamPlain(r) {
@@ -158,8 +156,9 @@ function dreamPlain(r) {
     (r.wake ? 'Lúc thức dậy: ' + r.wake + '\n\n' : '') +
     'Hình ảnh còn đọng lại: ' + r.image + '\n\n' +
     'Điều bạn nghe thấy: ' + r.reading + '\n\n' +
-    (r.talk ? 'Mình sẽ hồi âm qua email để chọn giờ cho một cuộc trò chuyện ngắn trực tuyến, nơi chúng ta cùng đọc giấc mơ này.\n\n' : '') +
-    'Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây: ' + CONFIG.COURSE_URL + '\n\n' +
+    'Mình sẽ đọc giấc mơ này thật chậm và hồi âm bạn bằng thư.\n\n' +
+    'Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây: ' + CONFIG.COURSE_URL + '\n' +
+    'Nếu bạn có thắc mắc về tiếng gọi của tạo tác, hay về hành trình, bạn cứ viết cho mình: ' + CONFIG.ASK_URL + '\n\n' +
     'Thân mến,\nVũ Phi Yên\nMy Treasure Map, EarthWise VN';
 }
 
@@ -167,9 +166,9 @@ function notifyYen(r) {
   try {
     var me = Session.getEffectiveUser().getEmail();
     if (!me) return;
-    var subject = '[My Treasure Map] Giấc mơ mới' + (r.talk ? ' · xin hẹn trò chuyện' : '') + (r.name ? ' · ' + r.name : '');
+    var subject = '[My Treasure Map] Giấc mơ mới' + (r.name ? ' · ' + r.name : '');
     var body = 'Người gửi: ' + (r.name || '(không tên)') + ' <' + r.email + '>\n' +
-      'Xin hẹn trò chuyện: ' + (r.talk ? 'Có' : 'Không') + '\n\n' +
+      'Yên hồi âm giấc mơ này bằng thư (bấm Trả lời).\n\n' +
       'Câu hỏi: ' + r.q + '\n\nGiấc mơ: ' + r.dream + '\n\nHình ảnh: ' + r.image + '\n\nĐiều họ nghe thấy: ' + r.reading +
       (r.note ? '\n\nHỏi thêm, khung giờ: ' + r.note : '') +
       '\n\nSổ giấc mơ: https://docs.google.com/spreadsheets/d/' + CONFIG.SHEET_ID + '/edit';

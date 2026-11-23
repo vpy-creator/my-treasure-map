@@ -1,29 +1,31 @@
 /**
- * My Treasure Map · Dấu chấm đầu tiên (món quà)
- * Nhận tấm thiếp từ trang web, ghi vào Google Sheet, và gửi bản đúc kết tới người viết.
+ * My Treasure Map · Dấu chấm đầu tiên (món quà) + Viết cho Yên (thông điệp)
+ * Nhận tấm thiếp từ trang món quà, ghi vào Google Sheet, gửi bản đúc kết tới người viết.
+ * Nhận thông điệp từ trang "Viết cho Yên", ghi vào tab "Thông điệp" của cùng Sheet, và báo cho Yên qua email.
  *
- * CÁCH NỐI (làm một lần, chừng năm phút, trên máy tính):
- * 1. Mở Sheet "My Treasure Map · Dấu chấm đầu tiên (món quà)".
- * 2. Menu Tiện ích mở rộng (Extensions) → Apps Script.
- * 3. Xoá hết code mẫu, dán TOÀN BỘ file này vào, bấm Lưu.
- * 4. Bấm Triển khai (Deploy) → Tuỳ chọn triển khai mới (New deployment).
- *      Loại: Ứng dụng web (Web app)
- *      Thực thi với tư cách: Tôi (Me)
- *      Ai có quyền truy cập: Bất kỳ ai (Anyone)
- *    Bấm Triển khai và cấp quyền khi được hỏi.
- * 5. Sao chép "URL ứng dụng web" (kết thúc bằng /exec) và gửi cho Claude,
- *    hoặc tự dán vào dòng ENDPOINT trong file index.html.
+ * CÁCH CẬP NHẬT (khi file này đổi, chừng ba phút, trên máy tính):
+ * 1. Mở Sheet "My Treasure Map · Dấu chấm đầu tiên (món quà)" → Tiện ích mở rộng (Extensions) → Apps Script.
+ * 2. Xoá hết code cũ, dán TOÀN BỘ file này vào, bấm Lưu.
+ * 3. Bấm Triển khai (Deploy) → Quản lý các bản triển khai (Manage deployments).
+ *    Bấm biểu tượng cây bút cạnh bản đang chạy → mục Phiên bản (Version) chọn "Phiên bản mới" (New version) → Triển khai.
+ *    Làm cách này thì đường link /exec giữ nguyên, các trang web vẫn nối đúng chỗ.
+ * 4. Lần đầu sau khi thêm phần gửi email báo, Google có thể hỏi cấp quyền thêm; bấm cho phép.
+ *
+ * CÁCH NỐI LẦN ĐẦU (nếu chưa từng nối): Deploy → New deployment → Web app → Execute as: Me →
+ * Who has access: Anyone → copy đường link /exec, dán vào dòng ENDPOINT trong các file index.html.
  */
 
 var CONFIG = {
   SHEET_ID: '1JwZ3W7WiFoBacseQhF9Lc2p5t1rjRG2S1jlARZwDBME',
+  TAB_MESSAGE: 'Thông điệp',  // tab nhận thông điệp từ trang Viết cho Yên; script tự tạo nếu chưa có
   AUTO_SEND: true,            // true: thư đúc kết tự gửi ngay. false: chỉ tạo nháp trong Gmail để Yên đọc rồi tự bấm gửi.
+  NOTIFY_YEN: true,           // báo cho Yên qua email mỗi khi có thông điệp mới
   DAILY_CAP: 60,              // quá số thư này trong một ngày thì chỉ ghi Sheet, chờ Yên gửi tay
   SENDER_NAME: 'Vũ Phi Yên',
   SUBJECT: 'Dấu chấm đầu tiên trên tấm bản đồ của bạn',
-  BOOKING_URL: 'https://product-sprint-freebie-nov26.linhptn.chatgpt.site/offer/yen#dang-ky-offer',
   COURSE_URL: 'https://my-treasure-map.vercel.app/',
-  GIFT_URL: 'https://my-treasure-map.vercel.app/dau-cham-dau-tien/'
+  GIFT_URL: 'https://my-treasure-map.vercel.app/dau-cham-dau-tien/',
+  ASK_URL: 'https://my-treasure-map.vercel.app/viet-cho-yen/'
 };
 
 function doPost(e) {
@@ -33,6 +35,7 @@ function doPost(e) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || d.consent !== true) {
       return json({ status: 'error', message: 'missing email or consent' });
     }
+    if (d.kind === 'thong-diep') return receiveMessage(d, email);
     var row = {
       name: clean(d.name, 80), email: email, loop: clean(d.loop, 300), peak: clean(d.peak, 1500),
       a1: clean(d.a1, 1500), a2: clean(d.a2, 1500), a3: clean(d.a3, 1500),
@@ -53,6 +56,45 @@ function doPost(e) {
 
 function doGet() {
   return json({ status: 'ready' });
+}
+
+/* ===== VIẾT CHO YÊN: thông điệp và câu hỏi ===== */
+function receiveMessage(d, email) {
+  var m = {
+    name: clean(d.name, 80), email: email, from: clean(d.from, 60),
+    message: clean(d.message, 6000), page: clean(d.page, 300)
+  };
+  if (!m.message) return json({ status: 'error', message: 'empty message' });
+  var ss = SpreadsheetApp.openById(CONFIG.SHEET_ID);
+  var tab = ss.getSheetByName(CONFIG.TAB_MESSAGE);
+  if (!tab) {
+    tab = ss.insertSheet(CONFIG.TAB_MESSAGE);
+    tab.appendRow(['Thời gian', 'Tên', 'Email', 'Đến từ lối nào', 'Thông điệp', 'Trang gửi', 'Báo Yên', 'Đã hồi âm', 'Ghi chú của Yên']);
+    tab.setFrozenRows(1);
+  }
+  var notified = notifyYen(m);
+  tab.appendRow([new Date(), safe(m.name), safe(m.email), safe(m.from), safe(m.message), safe(m.page), notified, '', '']);
+  return json({ status: 'ok' });
+}
+
+function notifyYen(m) {
+  if (!CONFIG.NOTIFY_YEN) return 'Tắt';
+  try {
+    var me = Session.getEffectiveUser().getEmail();
+    if (!me) return 'Không rõ địa chỉ của Yên';
+    var who = m.name || '(không tên)';
+    var subject = '[My Treasure Map] Thông điệp mới · ' + who + (m.from ? ' · ' + m.from : '');
+    var body = 'Người gửi: ' + who + ' <' + m.email + '>\n' +
+      (m.from ? 'Đến từ lối: ' + m.from + '\n' : '') +
+      (m.page ? 'Gửi từ trang: ' + m.page + '\n' : '') +
+      '\n' + m.message + '\n\n' +
+      'Bấm Trả lời (Reply) là thư đi thẳng tới người gửi.\n' +
+      'Sổ thông điệp: https://docs.google.com/spreadsheets/d/' + CONFIG.SHEET_ID + '/edit';
+    GmailApp.sendEmail(me, subject, body, { name: 'My Treasure Map', replyTo: m.email });
+    return 'Đã báo';
+  } catch (err) {
+    return 'Chưa báo được: ' + String(err).slice(0, 120);
+  }
 }
 
 /* Gửi thư đúc kết, hoặc tạo nháp, và trả về trạng thái để ghi vào Sheet. */
@@ -96,11 +138,11 @@ function letter(r) {
   out += '<p style="' + lab + '">Điều Linh thần tối chờ thấy</p><p style="' + box + '">' + esc(r.a3) + '</p>';
   out += '<p style="' + lab + '">Bước đầu tiên của bạn</p><p style="margin:6px 0 22px;">' + esc(r.deed) + (r.day ? ' Hẹn vào ' + esc(r.day) + '.' : '') + '</p>';
   if (r.note) {
-    out += '<p style="' + p + '">Mình cũng đã nhận được những cảm nghĩ và câu hỏi bạn gửi kèm, và mình sẽ đọc thật kỹ.</p>';
+    out += '<p style="' + p + '">Mình cũng đã nhận được những cảm nghĩ và câu hỏi bạn gửi kèm. Mình sẽ đọc thật kỹ, và nếu trong đó có điều bạn hỏi, mình sẽ hồi âm bạn bằng thư.</p>';
   }
   out += '<p style="' + p + '">Đây là bước xác định chỗ bạn đang đứng nơi bìa rừng. Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây.</p>';
   out += '<p style="margin:0 0 22px;"><a href="' + CONFIG.COURSE_URL + '" style="display:inline-block;background:#674B73;color:#F9F3F8;text-decoration:none;padding:12px 24px;border-radius:999px;">Xem hành trình My Treasure Map</a></p>';
-  out += '<p style="' + p + '">Tấm thiếp của bạn vẫn nằm ở <a href="' + CONFIG.GIFT_URL + '" style="color:#674B73;">trang món quà</a>, trên trình duyệt bạn đã dùng. Nếu bạn muốn trò chuyện trước khi quyết định, mình luôn sẵn lòng dành cho bạn <a href="' + CONFIG.BOOKING_URL + '" style="color:#674B73;">chừng nửa giờ trò chuyện</a>.</p>';
+  out += '<p style="' + p + '">Tấm thiếp của bạn vẫn nằm ở <a href="' + CONFIG.GIFT_URL + '" style="color:#674B73;">trang món quà</a>, trên trình duyệt bạn đã dùng. Nếu bạn có thắc mắc về hành trình xuyên rừng, bạn cứ <a href="' + CONFIG.ASK_URL + '" style="color:#674B73;">viết cho mình</a>. Mình đọc từng thông điệp và hồi âm bằng thư.</p>';
   out += '<p style="margin:0;">Thân mến,<br>Vũ Phi Yên<br><span style="color:#7B6A80;font-size:14px;">My Treasure Map, EarthWise VN</span></p>';
   return out + '</div>';
 }
@@ -116,7 +158,8 @@ function plainText(r) {
     'Bước đầu tiên của bạn: ' + r.deed + (r.day ? ' Hẹn vào ' + r.day + '.' : '') + '\n\n' +
     'Đây là bước xác định chỗ bạn đang đứng nơi bìa rừng. Khi tâm hồn bạn nói đã đến lúc lên đường, hành trình My Treasure Map đang chờ bạn ở đây: ' + CONFIG.COURSE_URL + '\n\n' +
     'Tấm thiếp của bạn vẫn nằm ở trang món quà: ' + CONFIG.GIFT_URL + '\n' +
-    'Nếu bạn muốn trò chuyện trước khi quyết định: ' + CONFIG.BOOKING_URL + '\n\n' +
+    'Nếu bạn có thắc mắc về hành trình xuyên rừng, bạn cứ viết cho mình: ' + CONFIG.ASK_URL + '\n' +
+    'Mình đọc từng thông điệp và hồi âm bằng thư.\n\n' +
     'Thân mến,\nVũ Phi Yên\nMy Treasure Map, EarthWise VN';
 }
 
