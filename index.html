@@ -21,7 +21,6 @@
   --body:'Be Vietnam Pro','Segoe UI',sans-serif;
   --quote:'Lora',Georgia,serif;
   --map:url(assets/ban-do.jpg);
-  --night-art:url(assets/dem.jpg);
 }
 :root[data-mode="dark"]{
   --bg:#1D1524; --bg-soft:#261B2E; --panel:#2E2137;
@@ -289,10 +288,6 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
 .gift-links{display:grid;gap:18px;margin-top:2rem;max-width:900px}
 .gift-links .gift-link{margin-top:0}
 @media(min-width:900px){.gift-links{grid-template-columns:1fr 1fr}.gift-links .gift-link{grid-template-columns:1fr;grid-template-rows:200px 1fr}.gift-links .gl-pic{min-height:200px}}
-.gl-night{background-image:var(--night-art);background-size:cover;background-position:50% 30%}
-.btn-night{background:var(--fig);border-color:var(--fig);color:#F5EFF4}
-:root[data-mode="dark"] .btn-night{color:#1D1524}
-.gl-when{display:block;font-size:14px;color:var(--cave-muted);margin:-.2rem 0 .8rem}
 .seat{margin:2rem 0 2.4rem;max-width:860px;border-radius:22px;overflow:hidden;background:var(--cave);color:var(--cave-ink);display:grid;box-shadow:0 18px 40px -26px rgba(40,20,50,.55)}
 .seat-txt{padding:30px 28px 28px;border-left:4px solid var(--cave-accent)}
 .seat h3{color:var(--cave-ink);margin:.3rem 0 .6rem}
@@ -333,7 +328,6 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
       <p class="lead">Và trước đó nữa, bạn cần vào rừng và đến được những hang đó đã. Có thể, bạn sẽ cần một tấm bản đồ?</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="dau-cham-dau-tien/">Tìm dấu chấm đầu tiên của bạn</a>
-        <a class="btn btn-night" href="hoi-va-toan-thuc-tra-loi/">Gửi một câu hỏi vào đêm</a>
         <a class="btn" href="viet-cho-yen/">Viết cho chúng tôi</a>
       </div>
       <p class="when">Bốn ngày bên bếp lửa cùng Vũ Phi Yên, để mỗi người tự tay vẽ tấm bản đồ của riêng mình, trong nhóm nhỏ ngồi vừa quanh chiếc bàn tròn. Hành trình diễn ra từ ngày 11 đến 14/03/2027.</p>
@@ -422,28 +416,16 @@ details p{padding:0 0 18px;max-width:660px;font-size:16.5px}
       <p class="eyebrow">Quà bên bìa rừng</p>
       <h2>Trước khi quyết định, bạn có thể nhận một món quà nhỏ</h2>
       <div class="prose">
-        <p>Nếu bạn muốn nếm thử một chút không khí của những ngày bên bếp lửa, tôi để sẵn nơi bìa rừng hai món quà. Món quà ban ngày mời bạn ra đứng ở khoảng trống trước hàng cây, nhìn lại vòng đi của mình, rồi từ xa hỏi chuyện Linh thần tối đang lơ lửng trước cửa hang gần nhất. Món quà ban đêm mời bạn gửi một câu hỏi vào giấc ngủ, để sáng hôm sau giấc mơ mang lời đáp trở về. Mỗi món quà cần chừng mười lăm phút yên tĩnh, và trao lại cho bạn một tấm thiếp của riêng mình.</p>
+        <p>Nếu bạn muốn nếm thử một chút không khí của những ngày bên bếp lửa, tôi để sẵn nơi bìa rừng một món quà. Món quà mời bạn ra đứng ở khoảng trống trước hàng cây, nhìn lại vòng đi của mình, rồi từ xa hỏi chuyện Linh thần tối đang lơ lửng trước cửa hang gần nhất. Món quà cần chừng mười lăm phút yên tĩnh, và trao lại cho bạn một tấm thiếp của riêng mình.</p>
       </div>
       <div class="gift-links">
         <a class="gift-link" href="dau-cham-dau-tien/">
           <span class="gl-pic" aria-hidden="true"></span>
-          <span class="gl-txt"><span class="gl-k">Món quà ban ngày</span><b>Dấu chấm đầu tiên: Bạn đang ở đây</b><span class="gl-go">Mở món quà</span></span>
-        </a>
-        <a class="gift-link js-night-gift" href="hoi-va-toan-thuc-tra-loi/">
-          <span class="gl-pic gl-night" aria-hidden="true"></span>
-          <span class="gl-txt"><span class="gl-k">Món quà ban đêm</span><b>Hỏi và Toàn thức trả lời</b><span class="gl-when">Mở tới hết ngày 25/11/2026</span><span class="gl-go">Mở món quà</span></span>
+          <span class="gl-txt"><span class="gl-k">Món quà bên bìa rừng</span><b>Dấu chấm đầu tiên: Bạn đang ở đây</b><span class="gl-go">Mở món quà</span></span>
         </a>
       </div>
     </section>
 
-    <script>
-    (function(){ if(Date.now()<Date.parse('2026-11-26T00:00:00+07:00')) return;
-      var b=document.querySelector('.btn-night'); if(b) b.remove();
-      var c=document.querySelector('.js-night-gift'); if(!c) return;
-      var w=c.querySelector('.gl-when'); if(w) w.textContent='Đã khép lại sau mùa núi rừng';
-      var g=c.querySelector('.gl-go'); if(g) g.textContent='Đọc lời nhắn cuối';
-    })();
-    </script>
     <section class="sec" id="bon-ngay">
       <p class="eyebrow">Bốn ngày</p>
       <h2>Bốn ngày bên bếp lửa</h2>

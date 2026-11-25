@@ -356,7 +356,6 @@ textarea.field.tall{min-height:200px}
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-cham" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32c6-10 10-14 14-14s8 4 14 14"/><circle cx="20" cy="10" r="3" fill="currentColor" stroke="none"/><path d="M4 36h32"/></symbol>
-  <symbol id="i-dem" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M26 6a13 13 0 1 0 8 22A11 11 0 0 1 26 6z"/><path d="M9 9v4M7 11h4M12 30v3M10.5 31.5h3"/></symbol>
   <symbol id="i-rung" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 34V22M28 34V24M20 36V18M12 22l-6 0 6-8 -3 0 3-6 3 6 -3 0 6 8z"/><path d="M20 18l-6 0 6-8-3 0 3-6 3 6-3 0 6 8z"/><path d="M28 24l-5 0 5-7-2 0 2-5 2 5-2 0 5 7z"/></symbol>
   <symbol id="i-khac" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="20" cy="20" r="9"/><path d="M20 4v5M20 31v5M4 20h5M31 20h5"/></symbol>
 </svg>
@@ -406,7 +405,6 @@ textarea.field.tall{min-height:200px}
             <span class="lab">Bạn đến từ lối nào?</span>
             <div class="ways" id="ways">
               <label class="way"><input type="radio" name="from" value="Dấu chấm đầu tiên"><svg class="ico"><use href="#i-cham"/></svg><div><b>Dấu chấm đầu tiên</b><span>Tôi vừa đứng nơi bìa rừng và muốn hỏi về hành trình xuyên rừng.</span></div></label>
-              <label class="way"><input type="radio" name="from" value="Hỏi và Toàn thức trả lời"><svg class="ico"><use href="#i-dem"/></svg><div><b>Hỏi và Toàn thức trả lời</b><span>Tôi vừa nhận lời đáp của đêm và còn thắc mắc về tiếng gọi của tạo tác.</span></div></label>
               <label class="way"><input type="radio" name="from" value="Trang hành trình My Treasure Map"><svg class="ico"><use href="#i-rung"/></svg><div><b>Trang hành trình</b><span>Tôi đã đọc về My Treasure Map và muốn hỏi thêm trước khi quyết định.</span></div></label>
               <label class="way"><input type="radio" name="from" value="Một lối khác"><svg class="ico"><use href="#i-khac"/></svg><div><b>Một lối khác</b><span>Tôi có điều muốn nói với Yên, ngoài những lối trên.</span></div></label>
             </div>
@@ -424,7 +422,6 @@ textarea.field.tall{min-height:200px}
         <div class="btn-row" style="margin-top:.6rem">
           <a class="btn" href="../">Trang hành trình My Treasure Map</a>
           <a class="btn" href="../dau-cham-dau-tien/">Dấu chấm đầu tiên</a>
-          <a class="btn" href="../hoi-va-toan-thuc-tra-loi/">Hỏi và Toàn thức trả lời</a>
         </div>
       </div>
     </section>
@@ -492,12 +489,12 @@ var Dust=(function(){
   function say(m){ warn.textContent=m; }
   function val(id){ return document.getElementById(id).value; }
 
-  /* lối vào gợi sẵn từ đường link: ?tu=dau-cham | toan-thuc | hanh-trinh */
-  var FROM={'dau-cham':'Dấu chấm đầu tiên','toan-thuc':'Hỏi và Toàn thức trả lời','hanh-trinh':'Trang hành trình My Treasure Map'};
+  /* lối vào gợi sẵn từ đường link: ?tu=dau-cham | hanh-trinh */
+  var FROM={'dau-cham':'Dấu chấm đầu tiên','hanh-trinh':'Trang hành trình My Treasure Map'};
   var tu=(new URLSearchParams(location.search)).get('tu');
   if(tu&&FROM[tu]){ var r=document.querySelector('input[name=from][value="'+FROM[tu]+'"]'); if(r) r.checked=true; }
   var ref=document.referrer||'';
-  if(!tu&&ref){ if(/dau-cham-dau-tien/.test(ref)) tu='dau-cham'; else if(/hoi-va-toan-thuc/.test(ref)) tu='toan-thuc'; else if(/my-treasure-map\.vercel\.app\/?$/.test(ref)) tu='hanh-trinh';
+  if(!tu&&ref){ if(/dau-cham-dau-tien/.test(ref)) tu='dau-cham'; else if(/my-treasure-map\.vercel\.app\/?$/.test(ref)) tu='hanh-trinh';
     if(tu){ var r2=document.querySelector('input[name=from][value="'+FROM[tu]+'"]'); if(r2) r2.checked=true; } }
 
   /* giữ nháp trên máy người viết, phòng khi trang tải lại */
