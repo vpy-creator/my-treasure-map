@@ -2,6 +2,36 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "headers": [
-    { "source": "/(.*)\\.mp3", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+    {
+      "source": "/(.*)\\.mp3",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/dau-cham-dau-tien",
+      "destination": "https://phiyenvu.com/my-treasure-map/dau-cham-dau-tien/",
+      "permanent": false
+    },
+    {
+      "source": "/dau-cham-dau-tien/",
+      "destination": "https://phiyenvu.com/my-treasure-map/dau-cham-dau-tien/",
+      "permanent": false
+    },
+    {
+      "source": "/viet-cho-yen",
+      "destination": "https://phiyenvu.com/my-treasure-map/viet-cho-yen/",
+      "permanent": false
+    },
+    {
+      "source": "/viet-cho-yen/",
+      "destination": "https://phiyenvu.com/my-treasure-map/viet-cho-yen/",
+      "permanent": false
+    }
   ]
 }
